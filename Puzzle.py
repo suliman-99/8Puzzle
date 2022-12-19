@@ -1,63 +1,69 @@
-import Node
+from __future__ import annotations
+from typing import List
+import copy
+from Pos import Pos
 
 class Puzzle:
-    def init(self, size):
-        # Initialize the puzzle size by the the specified size,open and closed lists to empty
-        self.n = size
-        self.open = []
-        self.closed = []
+    space = "_"
+    moves = [
+        Pos( 0,  1),
+        Pos( 0, -1),
+        Pos( 1,  0),
+        Pos(-1,  0),
+    ]
 
-    def accept(self):
-        # Accepts the puzzle from the user
-        puz = []
-        for i in range(0, self.n):
-            temp = input().split(" ")
-            puz.append(temp)
-        return puz
+    @classmethod
+    def find_space_pos(cls, grid: List[List[str]]) -> Pos:
+        for y, row in enumerate(grid):
+            for x, cell in enumerate(row):
+                if cell == cls.space:
+                    return Pos(x, y)
 
-    def f(self, start, goal):
-        # Heuristic function to calculate Heuristic value f(x) = h(x) + g(x)
-        return self.h(start.data, goal) + start.level
+    @classmethod
+    def new_Puzzle(cls, grid: List[List[str]]) -> Puzzle:
+        space_pos = cls.find_spaces_pos(grid)
+        return cls(grid, space_pos, 0)
 
-    def h(self, start, goal):
-        # Calculates the difference between the given puzzles
-        temp = 0
-        for i in range(0, self.n):
-            for j in range(0, self.n):
-                if start[i][j] != goal[i][j] and start[i][j] != '_':
-                    temp += 1
-        return temp
+    def __init__(self, grid: List[List[str]], space_pos: Pos,level: int) -> Puzzle:
+        self.grid = grid
+        self.space_pos = space_pos
+        self.level = level
+        self.expected_cost = None
 
-    def process(self):
-            # Accept Start and Goal Puzzle state
-            print("enter the start state matrix \n")
-            start = self.accept()
-            print("enter the goal state matrix \n")
-            goal = self.accept()
-            start = Node(start, 0, 0)
-            start.fval = self.f(start, goal)
-            # put the start node in the open list
-            self.open.append(start)
-            print("\n\n")
-            while True:
-                b = False
-                cur = self.open[0]
-                print("==================================================\n")
-                for i in cur.data:
-                    for j in i:
-                        print(j, end=" ")
-                    print("")
-                # if the difference between current and goal node is 0 we have reached the goal node
-                if (self.h(cur.data, goal) == 0):
-                    break
-                for i in cur.generate_child():
-                    i.fval = self.f(i, goal)
-                    self.open.append(i)
-                self.closed.append(cur)
-                del self.open[0]
-                # sort the open list based on f value
-                self.open.sort(key=lambda x: x.fval, reverse=False)
+    def calc_expected_cost(self, end: Puzzle) -> int:
+        expected_cost = 0
+        for y, row in enumerate(self.grid):
+            for x, cell in enumerate(row):
+                if self.grid[y][x] != end.grid[y][x]:
+                    expected_cost += 1
+        self.expected_cost = expected_cost
+
+    def is_valid(self, pos: Pos) -> bool:
+        if 0 <= pos.y and pos.y < len(self.grid) and 0 <= pos.x and pos.x < len(self.grid[pos.y]):
+            return True
+        return False
+
+    def move(self, pos: Pos) -> Puzzle:
+        if self.is_valid(pos):
+            temp = copy.deepcopy(self)
+            temp.grid[self.space_pos.y][self.space_pos.x] = self.grid[pos.y][pos.x]
+            temp.grid[pos.y][pos.x] = self.grid[self.space_pos.y][self.space_pos.x]
+            temp.space_pos = pos
+            temp.level += 1;
+            return temp
+        else:
+            return None
+
+    def generate_all_children(self) -> List[Puzzle]:
+        children = []
+        for new_pos in [self.space_pos + move for move in self.moves]:
+            child = self.move(new_pos)
+            if child is not None:
+                children.append(child)
+        return children
 
 
-puz = Puzzle(3)
-puz.process()
+    # the same Function but this is in one line with the List Comprehensions Technique
+    
+    # def generate_all_children(self) -> List[Puzzle]:
+    #     return [child for child in [self.move(self.space_pos + move) for move in self.moves] if child is not None]
