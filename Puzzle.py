@@ -14,29 +14,42 @@ class Puzzle:
 
     @classmethod
     def find_space_pos(cls, grid: List[List[str]]) -> Pos:
+        space_pos = None
         for y, row in enumerate(grid):
             for x, cell in enumerate(row):
                 if cell == cls.space:
-                    return Pos(x, y)
+                    if space_pos: return None
+                    space_pos = Pos(x, y)
+        return space_pos
 
     @classmethod
-    def new_Puzzle(cls, grid: List[List[str]]) -> Puzzle:
-        space_pos = cls.find_spaces_pos(grid)
+    def new_puzzle(cls, grid: List[List[str]]) -> Puzzle:
+        space_pos = cls.find_space_pos(grid)
+        if space_pos is None: return None
         return cls(grid, space_pos, 0)
 
     def __init__(self, grid: List[List[str]], space_pos: Pos,level: int) -> Puzzle:
         self.grid = grid
         self.space_pos = space_pos
         self.level = level
-        self.expected_cost = None
+        self.father = None
+
+    def clac_grid_diferences(self, other: Puzzle) -> int:
+        diff = 0
+        if len(self.grid) != len(other.grid): return -1
+        for y, row in enumerate(self.grid):
+            if len(self.grid[y]) != len(other.grid[y]): return -1
+            for x, cell in enumerate(row):
+                if self.grid[y][x] != other.grid[y][x]:
+                    diff += 1
+        return diff
+
 
     def calc_expected_cost(self, end: Puzzle) -> int:
-        expected_cost = 0
-        for y, row in enumerate(self.grid):
-            for x, cell in enumerate(row):
-                if self.grid[y][x] != end.grid[y][x]:
-                    expected_cost += 1
-        self.expected_cost = expected_cost
+        return self.level + self.clac_grid_diferences(end)
+
+    def is_finished(self, end: Puzzle) -> bool:
+        return not self.clac_grid_diferences(end)
 
     def is_valid(self, pos: Pos) -> bool:
         if 0 <= pos.y and pos.y < len(self.grid) and 0 <= pos.x and pos.x < len(self.grid[pos.y]):
@@ -50,11 +63,12 @@ class Puzzle:
             temp.grid[pos.y][pos.x] = self.grid[self.space_pos.y][self.space_pos.x]
             temp.space_pos = pos
             temp.level += 1;
+            temp.father = self
             return temp
         else:
             return None
 
-    def generate_all_children(self) -> List[Puzzle]:
+    def get_all_children(self) -> List[Puzzle]:
         children = []
         for new_pos in [self.space_pos + move for move in self.moves]:
             child = self.move(new_pos)
@@ -67,3 +81,24 @@ class Puzzle:
     
     # def generate_all_children(self) -> List[Puzzle]:
     #     return [child for child in [self.move(self.space_pos + move) for move in self.moves] if child is not None]
+
+    def __eq__(self, other: Puzzle) -> bool:
+        if self.level > other.level: return False
+        if self.space_pos != other.space_pos: return False
+        if self.clac_grid_diferences(other) != 0: return False
+        return True
+
+    def __lt__(self, other: Puzzle) -> bool:
+        return True
+
+    def __le__(self, other: Puzzle) -> bool:
+        return True
+
+    def __str__(self):
+        ret = ""
+        for row in self.grid:
+            for cell in row:
+                ret += cell + " "
+            ret += "\n"
+        ret += "\n"
+        return ret

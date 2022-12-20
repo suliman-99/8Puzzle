@@ -7,3 +7,9 @@ class Pos:
     
     def __add__(self, other: Pos) -> Pos:
         return Pos(self.x+other.x,self.y+other.y)
+
+    def __eq__(self, other: Pos) -> bool:
+        return self.x == other.x and self.y == other.y
+
+    def __ne__(self, other: Pos) -> bool:
+        return self.x != other.x or self.y != other.y
