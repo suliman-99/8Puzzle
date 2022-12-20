@@ -2,9 +2,9 @@ from Game import Game
 
 game = Game.new_game(
         [
-            ["_","2","3",],
-            ["1","5","6",],
-            ["4","7","8",],
+            ["4","1","2",],
+            ["7","5","3",],
+            ["8","_","6",],
         ],
         [
             ["1","2","3",],
@@ -13,11 +13,12 @@ game = Game.new_game(
         ],
     )
 
-path = game.get_path()
-
-for grid in path:
-    print(grid)
-
+if not isinstance(game,Game):
+    print(game)
+else:
+    path = game.get_path()
+    for grid in path:
+        print(grid)
 
 
 

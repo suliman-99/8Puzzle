@@ -34,16 +34,40 @@ class Puzzle:
         self.level = level
         self.father = None
 
+    def is_same_elements(self, other: Puzzle) -> bool:
+        if len(self.grid) != len(other.grid): return False
+        for y, row in enumerate(self.grid):
+            if len(self.grid[y]) != len(other.grid[y]): return False
+        m1 = {}
+        m2 = {}
+        for y, row in enumerate(self.grid):
+            for x, cell in enumerate(row):
+                c1 = 0; c2 = 0
+                if self.grid[y][x] in m1:
+                    c1 = m1[self.grid[y][x]]
+                if other.grid[y][x] in m2:
+                    c2 = m2[other.grid[y][x]]
+                m1[self.grid[y][x]] = c1 + 1
+                m2[other.grid[y][x]] = c2 + 1
+        for k in m1.keys():
+            if not k in m2 :
+                return False
+            if m1[k] != m2[k]:
+                return False
+        for k in m2.keys():
+            if not k in m1:
+                return False
+            if m1[k] != m2[k]:
+                return False
+        return True
+
     def clac_grid_diferences(self, other: Puzzle) -> int:
         diff = 0
-        if len(self.grid) != len(other.grid): return -1
         for y, row in enumerate(self.grid):
-            if len(self.grid[y]) != len(other.grid[y]): return -1
             for x, cell in enumerate(row):
                 if self.grid[y][x] != other.grid[y][x]:
                     diff += 1
         return diff
-
 
     def calc_expected_cost(self, end: Puzzle) -> int:
         return self.level + self.clac_grid_diferences(end)

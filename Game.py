@@ -9,10 +9,10 @@ class Game:
     def new_game(cls, start: List[List[str]], end: List[List[str]]) -> Game:
         start_puz = Puzzle.new_puzzle(start)
         end_puz = Puzzle.new_puzzle(end)
-        if start_puz is None or end_puz is None: return None
-        if start_puz.clac_grid_diferences(end_puz) == -1: return None
+        if start_puz is None: return "Start Puzzle Dosen't have exactly 1 (space: \"_\") !!!"
+        if end_puz is None: return "End Puzzle Dosen't have exactly 1 (space: \"_\") !!!"
+        if not start_puz.is_same_elements(end_puz): return "Start Puzzle ans End Puzzle don't have the same elements !!!"
         return cls(start_puz, end_puz)
-
 
     def __init__(self, start: Puzzle, end: Puzzle) -> Game:
         self.start = start
@@ -43,7 +43,7 @@ class Game:
 
         while(not open.empty()):
             _, top = open.get()
-            if top.clac_grid_diferences(self.end) == 0:
+            if top.is_finished(self.end):
                 return top
             for child in top.get_all_children():
                 is_new = True
