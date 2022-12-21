@@ -1,4 +1,5 @@
 from django import template
+from ..puzzle_logic.Puzzle import Puzzle
 
 register = template.Library()
 
@@ -10,3 +11,7 @@ def is_str(value):
 @register.filter
 def my_len(value):
     return len(value) - 1
+    
+@register.filter
+def is_space(value):
+    return value == Puzzle.space

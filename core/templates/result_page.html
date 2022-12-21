@@ -11,31 +11,41 @@
                 <div class="col-12">
                     <div class="text-center">
                         <h1>
-                            Our Solution
+                            {% if path|is_str %}
+                                Error !!!
+                            {% else %}
+                                Our Solution
+                            {% endif %}
                         </h1>
                     </div> 
-                    <div class="alert alert-info" role="alert">
-                        Our Solution is The best (minimum) Solution with {{ path|my_len }} step
-                    </div>
                 </div>
             </div>
             {% if path|is_str %}
-                <h1>{{ path }}</h1>
+                <div class="alert alert-danger" role="alert">
+                    <h1>{{ path }}</h1>
+                </div>
             {% else %}
+                <div class="alert alert-info" role="alert">
+                    <h2>Our Solution is The best (minimum) Solution with {{ path|my_len }} step</h2>
+                </div>
                 {% for puzzle in path %}  
                 <h2> ------------------------------ {{ puzzle.level }} ------------------------------ </h2>
                     {% for row in puzzle.grid %} 
                         <div class="row">
                             {% for cell in row %}  
                                 <div class="col-lg-4">
-                                    <h2><span class="badge bg-secondary">{{ cell }}</span></h2>
+                                    {% if cell|is_space %}
+                                        <h2><span class="badge bg-primary">{{ cell }}</span></h2>
+                                    {% else %}
+                                        <h2><span class="badge bg-secondary">{{ cell }}</span></h2>
+                                    {% endif %}
                                 </div>
                             {% endfor %}
                         </div>
                     {% endfor %}
                 {% endfor %}
+                <h2>---------------------------------------------------------------</h2>
             {% endif %}
-            <h2>---------------------------------------------------------------</h2>
         </div>
     </body>
 </html>

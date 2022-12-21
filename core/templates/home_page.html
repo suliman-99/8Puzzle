@@ -1,11 +1,98 @@
 {% load static %}
-{% load type %}
+{% load filters %}
 <!DOCTYPE html>
 <html>
     <header>
         <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
     </header>
     <body>
-        <h1>Home Page</h1>
+        <div class="text-center">
+            <h1>Home Page</h1>
+            <div class="alert alert-info" role="alert">
+                <h2>You Just Need Refresh To get The Default TestCase</h2>
+            </div>
+            <form action="/result_page/" target="_self" method="post">
+                {% csrf_token %}
+                <br>
+                <h2> ------------------------------------ Start Puzzle ------------------------------------- </h2>
+                <br>
+                <div class="row">
+                        <div class="col-lg-4">
+                            <input type="text" name="start_1" value="2"><br>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" name="start_2" value="3"><br>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" name="start_3" value="6"><br>
+                        </div>
+                </div>
+                <br>
+                <div class="row">
+                        <div class="col-lg-4">
+                            <input type="text" name="start_4" value="1"><br>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" name="start_5" value="5"><br>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" name="start_6" value="_"><br>
+                        </div>
+                </div>
+                <br>
+                <div class="row">
+                        <div class="col-lg-4">
+                            <input type="text" name="start_7" value="4"><br>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" name="start_8" value="7"><br>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" name="start_9" value="8"><br>
+                        </div>
+                </div>
+                <br>
+                <h2> ------------------------------------- End Puzzle ------------------------------------- </h2>
+                <br>
+                <div class="row">
+                        <div class="col-lg-4">
+                            <input type="text" name="end_1" value="1"><br>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" name="end_2" value="2"><br>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" name="end_3" value="3"><br>
+                        </div>
+                </div>
+                <br>
+                <div class="row">
+                        <div class="col-lg-4">
+                            <input type="text" name="end_4" value="4"><br>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" name="end_5" value="5"><br>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" name="end_6" value="6"><br>
+                        </div>
+                </div>
+                <br>
+                <div class="row">
+                        <div class="col-lg-4">
+                            <input type="text" name="end_7" value="7"><br>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" name="end_8" value="8"><br>
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" name="end_9" value="_"><br>
+                        </div>
+                </div>
+                <br>
+                <h2> --------------------------------------------------------------------------------------- </h2>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
     </body>
 </html>

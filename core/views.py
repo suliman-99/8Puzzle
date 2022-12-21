@@ -1,23 +1,24 @@
 from django.shortcuts import render
 from .puzzle_logic.Game import Game
-
+from django.http import HttpRequest
 
 
 def home_page(request):
     return render(request, "home_page.html")
 
 
-def result_page(request):
+def result_page(request: HttpRequest):
+    data = request.POST
     game = Game.new_game(
             [
-                ["4","1","2",],
-                ["7","5","3",],
-                ["8","_","6",],
+                [data['start_1'],data['start_2'],data['start_3'],],
+                [data['start_4'],data['start_5'],data['start_6'],],
+                [data['start_7'],data['start_8'],data['start_9'],],
             ],
             [
-                ["1","2","3",],
-                ["4","5","6",],
-                ["7","8","_",],
+                [data['end_1'],data['end_2'],data['end_3'],],
+                [data['end_4'],data['end_5'],data['end_6'],],
+                [data['end_7'],data['end_8'],data['end_9'],],
             ],
         )
     path = game

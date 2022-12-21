@@ -11,7 +11,7 @@ class Game:
         end_puz = Puzzle.new_puzzle(end)
         if start_puz is None: return "Start Puzzle Dosen't have exactly 1 (space: \"_\") !!!"
         if end_puz is None: return "End Puzzle Dosen't have exactly 1 (space: \"_\") !!!"
-        if not start_puz.is_same_elements(end_puz): return "Start Puzzle ans End Puzzle don't have the same elements !!!"
+        if not start_puz.is_same_elements(end_puz): return "Start Puzzle and End Puzzle don't have the same elements !!!"
         return cls(start_puz, end_puz)
 
     def __init__(self, start: Puzzle, end: Puzzle) -> Game:
