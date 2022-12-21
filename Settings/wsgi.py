@@ -1,5 +1,5 @@
 """
-WSGI config for _8Puzzle project.
+WSGI config for 8Puzzle project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', '_8Puzzle.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings.settings')
 
 application = get_wsgi_application()

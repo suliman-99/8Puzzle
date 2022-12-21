@@ -1,0 +1,41 @@
+{% load static %}
+{% load filters %}
+<!DOCTYPE html>
+<html>
+    <header>
+        <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    </header>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-center">
+                        <h1>
+                            Our Solution
+                        </h1>
+                    </div> 
+                    <div class="alert alert-info" role="alert">
+                        Our Solution is The best (minimum) Solution with {{ path|my_len }} step
+                    </div>
+                </div>
+            </div>
+            {% if path|is_str %}
+                <h1>{{ path }}</h1>
+            {% else %}
+                {% for puzzle in path %}  
+                <h2> ------------------------------ {{ puzzle.level }} ------------------------------ </h2>
+                    {% for row in puzzle.grid %} 
+                        <div class="row">
+                            {% for cell in row %}  
+                                <div class="col-lg-4">
+                                    <h2><span class="badge bg-secondary">{{ cell }}</span></h2>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+            <h2>---------------------------------------------------------------</h2>
+        </div>
+    </body>
+</html>

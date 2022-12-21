@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import List
 import copy
-from Pos import Pos
+from .Pos import Pos
 
 class Puzzle:
     space = "_"
