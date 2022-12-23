@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from .puzzle_logic.Game import Game
 from django.http import HttpRequest
+from .puzzle_logic.Game import Game
 
 
-def home_page(request):
+def home_page(request: HttpRequest):
     return render(request, "home_page.html")
 
 

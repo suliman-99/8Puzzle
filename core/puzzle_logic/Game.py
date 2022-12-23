@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import List
-from .Puzzle import Puzzle
 from queue import PriorityQueue
+from .Puzzle import Puzzle
 
 
 class Game:
