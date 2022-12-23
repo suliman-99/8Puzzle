@@ -91,20 +91,9 @@ class Puzzle:
             return temp
         else:
             return None
-
+            
     def get_all_children(self) -> List[Puzzle]:
-        children = []
-        for new_pos in [self.space_pos + move for move in self.moves]:
-            child = self.move(new_pos)
-            if child is not None:
-                children.append(child)
-        return children
-
-
-    # the same Function but this is in one line with the List Comprehensions Technique
-    
-    # def generate_all_children(self) -> List[Puzzle]:
-    #     return [child for child in [self.move(self.space_pos + move) for move in self.moves] if child is not None]
+        return [child for child in [self.move(self.space_pos + move) for move in self.moves] if child is not None]
 
     def __eq__(self, other: Puzzle) -> bool:
         if self.level > other.level: return False
