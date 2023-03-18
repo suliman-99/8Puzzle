@@ -12,9 +12,13 @@ You can run this just by the following steps:
 
 first open cmd in the place you want to download the project in
 then write this commands :
+
 1- git clone https://github.com/suliman-99/8Puzzle.git
+
 2- cd 8Puzzle
+
 3- pipenv install
+
 4- python manage.py runserver
 
 go to your browser and open http://127.0.0.1:8000/ and enjoy it!
