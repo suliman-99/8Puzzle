@@ -23,7 +23,9 @@ then write this commands :
 
 3- pipenv install
 
-4- python manage.py runserver
+4- pipenv shell
+
+5- python manage.py runserver
 
 go to your browser and open http://127.0.0.1:8000/ and enjoy it!
 
