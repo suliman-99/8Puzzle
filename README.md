@@ -17,9 +17,9 @@ first open cmd in the place you want to download the project in
 
 then write this commands :
 
-1- git clone https://github.com/suliman-99/8Puzzle.git
+1- git init
 
-2- cd 8Puzzle
+2- git pull https://github.com/suliman-99/8Puzzle.git
 
 3- pipenv install
 
